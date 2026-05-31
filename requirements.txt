@@ -1,0 +1,11 @@
+ultralytics
+supervision
+opencv-python-headless
+numpy
+torch
+torchvision
+pytest
+pytest-asyncio
+ruff
+httpx
+pytest-cov

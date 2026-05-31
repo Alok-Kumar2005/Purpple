@@ -1,0 +1,63 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# ==========================================
+# Python Environment & Caching
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ==========================================
+# Virtual Environments (uv / pip)
+# ==========================================
+.venv/
+venv/
+ENV/
+env/
+
+# ==========================================
+# Large Video Assets & Media
+# ==========================================
+# Never commit raw video clips to git repository
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.jpg
+*.png
+
+# ==========================================
+# ML Model Weights
+# ==========================================
+# Heavy model files should be downloaded locally, not tracked
+*.pt
+*.pth
+yolov8*.pt
+
+# ==========================================
+# Generated Pipeline Outputs
+# ==========================================
+# Ignore local runtime outputs/logs
+*.jsonl
+*.log
+cam*_events.jsonl
+
+# ==========================================
+# OS & IDE Specific files
+# ==========================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

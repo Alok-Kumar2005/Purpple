@@ -1,0 +1,19 @@
+[project]
+name = "purpple"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.28.1",
+    "numpy>=2.4.6",
+    "opencv-python-headless>=4.13.0.92",
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.15",
+    "supervision>=0.28.0",
+    "torch>=2.12.0",
+    "torchvision>=0.27.0",
+    "ultralytics>=8.4.57",
+]

@@ -1,0 +1,216 @@
+{
+  "store_id": "ST1008",
+  "store_name": "Brigade_Bangalore",
+  "city": "Bangalore",
+  "open_hours": {
+    "open": "10:00",
+    "close": "22:00"
+  },
+  "cameras": {
+    "CAM_1": {
+      "type": "floor",
+      "description": "Main floor — Skincare brand product racks view",
+      "frame_width": 1920,
+      "frame_height": 1080
+    },
+    "CAM_2": {
+      "type": "floor",
+      "description": "Main floor — Makeup brand product racks view",
+      "frame_width": 1920,
+      "frame_height": 1080
+    },
+    "CAM_3": {
+      "type": "entry",
+      "description": "Entry/Exit threshold — front glass door view",
+      "frame_width": 1920,
+      "frame_height": 1080
+    },
+    "CAM_4": {
+      "type": "floor",
+      "description": "Backroom / Storage corridor and replenishment zone",
+      "frame_width": 1920,
+      "frame_height": 1080
+    },
+    "CAM_5": {
+      "type": "billing",
+      "description": "POS checkout counter and accessories wall display",
+      "frame_width": 1920,
+      "frame_height": 1080
+    }
+  },
+  "entry_zone": {
+    "camera_id": "CAM_3",
+    "line_y_outer": 450,
+    "line_y_inner": 700,
+    "direction_down": "ENTRY",
+    "direction_up": "EXIT"
+  },
+  "billing_zone": {
+    "zone_id": "BILLING_COUNTER",
+    "sku_zone": "BILLING",
+    "cameras": ["CAM_5"],
+    "polygon": [
+      [430, 435],
+      [496, 354],
+      [824, 433],
+      [668, 1004],
+      [271, 965]
+    ]
+  },
+  "zones": [
+    {
+      "zone_id": "FARMSTAY",
+      "sku_zone": "SKINCARE",
+      "cameras": ["CAM_1"],
+      "polygon": [
+        [14, 25],
+        [340, 27],
+        [446, 902],
+        [156, 993]
+      ]
+    },
+    {
+      "zone_id": "THE_FACE_SHOP",
+      "sku_zone": "CLEAN_BEAUTY",
+      "cameras": ["CAM_1"],
+      "polygon": [
+        [340, 27],
+        [708, 30],
+        [744, 838],
+        [446, 902]
+      ]
+    },
+    {
+      "zone_id": "DE_TAN",
+      "sku_zone": "SKINCARE",
+      "cameras": ["CAM_1"],
+      "polygon": [
+        [708, 30],
+        [1008, 26],
+        [995, 774],
+        [744, 838]
+      ]
+    },
+    {
+      "zone_id": "DERMA_CO",
+      "sku_zone": "SKINCARE",
+      "cameras": ["CAM_1"],
+      "polygon": [
+        [1008, 26],
+        [1221, 25],
+        [1189, 698],
+        [995, 774]
+      ]
+    },
+    {
+      "zone_id": "MINIMALIST",
+      "sku_zone": "SKINCARE",
+      "cameras": ["CAM_1"],
+      "polygon": [
+        [1221, 25],
+        [1380, 28],
+        [1336, 641],
+        [1189, 698]
+      ]
+    },
+    {
+      "zone_id": "AQUA_LOGICA",
+      "sku_zone": "SKINCARE",
+      "cameras": ["CAM_1"],
+      "polygon": [
+        [1380, 28],
+        [1579, 61],
+        [1549, 530],
+        [1336, 641]
+      ]
+    },
+    {
+      "zone_id": "DERMDOC",
+      "sku_zone": "SKINCARE",
+      "cameras": ["CAM_1"],
+      "polygon": [
+        [1579, 61],
+        [1660, 40],
+        [1630, 486],
+        [1549, 530]
+      ]
+    },
+    {
+      "zone_id": "ALPS_MARS_LOREAL",
+      "sku_zone": "MAKEUP",
+      "cameras": ["CAM_2"],
+      "polygon": [
+        [563, 95],
+        [637, 89],
+        [627, 554],
+        [545, 500]
+      ]
+    },
+    {
+      "zone_id": "SWISS_BEAUTY",
+      "sku_zone": "MAKEUP",
+      "cameras": ["CAM_2"],
+      "polygon": [
+        [734, 99],
+        [855, 101],
+        [855, 654],
+        [712, 577]
+      ]
+    },
+    {
+      "zone_id": "LAKME",
+      "sku_zone": "MAKEUP",
+      "cameras": ["CAM_2"],
+      "polygon": [
+        [1023, 97],
+        [1259, 123],
+        [1192, 773],
+        [984, 714]
+      ]
+    },
+    {
+      "zone_id": "MAYBELLINE_FACES",
+      "sku_zone": "MAKEUP",
+      "cameras": ["CAM_2"],
+      "polygon": [
+        [1551, 157],
+        [1866, 262],
+        [1724, 1067],
+        [1433, 957]
+      ]
+    },
+    {
+      "zone_id": "STOCKROOM_SHELF",
+      "sku_zone": "INVENTORY",
+      "cameras": ["CAM_4"],
+      "polygon": [
+        [1121, 49],
+        [1634, 83],
+        [1614, 469],
+        [1104, 341]
+      ]
+    },
+    {
+      "zone_id": "STOCKROOM_WALKWAY",
+      "sku_zone": "INVENTORY",
+      "cameras": ["CAM_4"],
+      "polygon": [
+        [883, 8],
+        [1035, 590],
+        [1601, 678],
+        [1837, 749]
+      ]
+    },
+    {
+      "zone_id": "ACCESSORIES_WALL",
+      "sku_zone": "ACCESSORIES",
+      "cameras": ["CAM_5"],
+      "polygon": [
+        [1255, 22],
+        [1888, 32],
+        [1852, 1065],
+        [1493, 1069]
+      ]
+    }
+  ]
+}
