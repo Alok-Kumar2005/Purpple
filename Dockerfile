@@ -1,24 +1,24 @@
 FROM python:3.12-slim
 
-# Install uv inside the container for ultra-fast package setups
+# Install uv for ultra-fast package installs
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /workspace
 
-# Copy configuration files to resolve dependencies
-COPY pyproject.toml uv.lock ./
+# Copy ONLY the API requirements file (not pyproject.toml which pulls in torch/ultralytics)
+COPY requirements-api.txt ./
 
-# Install project dependencies globally inside the container
-RUN uv pip install --system -r pyproject.toml
+# Install API dependencies globally — no torch, no ultralytics, ~200 MB instead of ~4 GB
+RUN uv pip install --system -r requirements-api.txt
 
-# Copy application code into the container workspace
+# Copy application source
 COPY main.py ./
 COPY app/ ./app/
 COPY pipeline/ ./pipeline/
 COPY store_layout.json ./
 
-# Open up the API port
+# Expose the API port
 EXPOSE 8000
 
-# Run FastAPI in production-optimized mode
+# Production server
 CMD ["fastapi", "run", "main.py", "--host", "0.0.0.0", "--port", "8000"]

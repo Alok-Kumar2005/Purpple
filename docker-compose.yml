@@ -41,7 +41,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile        # uses requirements-api.txt — no torch/ultralytics
     container_name: store_intelligence_api
     ports:
       - "8000:8000"

@@ -1,0 +1,15 @@
+ultralytics>=8.4.57          # YOLOv8 — downloads weights on first run
+supervision>=0.28.0          # ByteTrack + annotation utilities
+opencv-python-headless>=4.13.0.92  # headless: no GUI needed for server runs
+
+# ML runtime — CPU version keeps download size manageable (~250 MB vs ~2 GB for CUDA)
+# For NVIDIA GPU, replace these two lines with the CUDA wheels:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+torch>=2.12.0
+torchvision>=0.27.0
+
+# Numerics
+numpy>=2.4.6
+
+# Utility (used for ingestion helper script)
+requests>=2.32.0
