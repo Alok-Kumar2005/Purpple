@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # ── Primary PostgreSQL database ──────────────────────────────────────────────
   db:
     image: postgres:16-alpine
     container_name: retail_db
@@ -17,18 +18,65 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
+  # ── Test PostgreSQL database (isolated schema for pytest) ────────────────────
+  db_test:
+    image: postgres:16-alpine
+    container_name: retail_db_test
+    environment:
+      POSTGRES_USER: retail
+      POSTGRES_PASSWORD: retail
+      POSTGRES_DB: store_intelligence_test
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U retail -d store_intelligence_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ── FastAPI Intelligence API ──────────────────────────────────────────────────
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: store_intelligence_api
     ports:
       - "8000:8000"
     environment:
       - DATABASE_URL=postgresql+asyncpg://retail:retail@db:5432/store_intelligence
       - ALLOWED_ORIGINS=*
+      - QUEUE_SPIKE_DEPTH=5
+      - CONVERSION_DROP_STDDEV=2.0
+      - DEAD_ZONE_MINUTES=30
+      - STALE_FEED_MINUTES=10
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+  # ── Streamlit Live Dashboard (Part E) ────────────────────────────────────────
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    container_name: store_intelligence_dashboard
+    ports:
+      - "8501:8501"
+    environment:
+      - API_BASE=http://web:8000
+    depends_on:
+      web:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   postgres_data:
