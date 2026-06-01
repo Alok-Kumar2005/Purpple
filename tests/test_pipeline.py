@@ -1,10 +1,3 @@
-# PROMPT: Write pytest tests for a retail CCTV detection pipeline components.
-# CHANGES MADE:
-#  - Updated layout definitions to support dual-gate parameters (line_y_outer, line_y_inner).
-#  - Renamed detect_entry_direction references to match production method detect_entry_point.
-#  - Replaced presence ratio test with a threshold test tracking frames below STAFF_LOCK_FRAMES.
-#  - Fixed import to reference DARK_VALUE_THRES instead of DARK_VALUE_THRESHOLD.
-
 import json
 from pathlib import Path
 from datetime import datetime, timezone
@@ -13,9 +6,9 @@ from unittest.mock import MagicMock, patch
 import numpy as np
 import pytest
 
-from zones import ZoneMapper
-from emit import EventEmitter, SessionState
-from tracker import PersonTracker, DARK_VALUE_THRES
+from pipeline.zones import ZoneMapper
+from pipeline.emit import EventEmitter, SessionState
+from pipeline.tracker import PersonTracker, DARK_VALUE_THRES
 
 
 # ── Fixtures ─────────────────────────────────────────────────────────────────
@@ -333,3 +326,27 @@ class TestEventEmitter:
         events = read_events(emitter.out_path)
         for event in events:
             assert not (required_fields - set(event.keys()))
+
+
+
+#  PROMPT:
+# "Write pytest tests for a retail CCTV detection pipeline with these components:
+#  1. ZoneMapper: maps bounding box coordinates to zone names using polygon intersection.
+#     Test: point inside polygon, point outside, foot-point calculation, entry direction detection.
+#  2. PersonTracker: classifies staff by dark clothing color (HSV torso analysis) + presence ratio.
+#     Test: dark torso returns high dark_score, light torso returns low score, staff locked after
+#     STAFF_LOCK_FRAMES, short-lived track not classified as staff.
+#  3. EventEmitter: emits ENTRY/EXIT/ZONE_ENTER/ZONE_EXIT/ZONE_DWELL/REENTRY events.
+#     Test: new track → ENTRY emitted on entry cam, zone transition → ZONE_ENTER+ZONE_EXIT,
+#     dwell interval → ZONE_DWELL, track reappearing → REENTRY, staff events → not emitted,
+#     empty frame list → no crash, all-staff clip → 0 customer events.
+#  Use pytest fixtures, tmp_path for output files, mock cv2/YOLO where heavy."
+#
+# CHANGES MADE:
+#  - Removed mocking of YOLOv8 internals (too brittle); instead test tracker._torso_dark_score
+#    directly with synthetic BGR frames — faster and more precise.
+#  - Added edge-case: empty store (zero detections every frame) → flush produces no ENTRY events.
+#  - Added edge-case: all-staff clip → no customer events in output.
+#  - Replaced AI-generated fixture for layout (used hardcoded minimal dict instead of file load).
+#  - Added group-entry test: 3 simultaneous detections on entry cam → 3 ENTRY events, not 1.
+#  - Timestamp derivation test added (was missing from AI output).

@@ -1,0 +1,50 @@
+# ==========================================
+# Virtual Environments & Python Cache
+# ==========================================
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ==========================================
+# Heavy Media Assets (CCTV Footage)
+# ==========================================
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.jpg
+*.png
+
+# ==========================================
+# Local Pipeline Runs & Outputs
+# ==========================================
+*.jsonl
+cam*_events.jsonl
+*.log
+
+# ==========================================
+# Local Test Framework Caches
+# ==========================================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ==========================================
+# ML Model Weights
+# ==========================================
+*.pt
+yolov8*.pt
+
+# ==========================================
+# IDEs and System Artifacts
+# ==========================================
+.git/
+.gitignore
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
