@@ -146,6 +146,8 @@ async def ingest_events(payload: dict, db: DB) -> IngestResponse:
         return result
     except (OperationalError, SQLAlchemyError):
         raise
+    except HTTPException: 
+        raise
     except Exception as exc:
         logger.exception("Unexpected ingest error")
         raise HTTPException(status_code=500, detail={"error": "ingest_failed", "detail": str(exc)})

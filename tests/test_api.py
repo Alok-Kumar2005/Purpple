@@ -15,28 +15,8 @@ load_dotenv()
 # Change the top database connection line to look for a local testing database:
 os.environ["DATABASE_URL"] = os.getenv("TEST_DATABASE_URL")
  
-from app.database import Base, engine, AsyncSessionLocal   # noqa: E402
+from app.database import AsyncSessionLocal
 from main import app
- 
- 
-# ── Fixtures ──────────────────────────────────────────────────────────────────
- 
-@pytest_asyncio.fixture(scope="session")
-def event_loop():
-    loop = asyncio.new_event_loop()
-    yield loop
-    loop.close()
- 
- 
-@pytest_asyncio.fixture(scope="session", autouse=True)
-async def create_schema():
-    """Create all tables once per test session."""
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    yield
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
- 
  
 @pytest_asyncio.fixture
 async def db():
@@ -67,7 +47,7 @@ def make_event(
     ts_offset_s: int = 0,
     event_id: str | None = None,
 ) -> dict:
-    base_ts = datetime(2026, 4, 10, 20, 0, 0, tzinfo=timezone.utc)
+    base_ts = datetime.now(tz=timezone.utc) - timedelta(hours=1)
     ts = (base_ts + timedelta(seconds=ts_offset_s)).strftime("%Y-%m-%dT%H:%M:%SZ")
     return {
         "event_id":   event_id or str(uuid.uuid4()),
