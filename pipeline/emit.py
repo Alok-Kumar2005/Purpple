@@ -249,18 +249,14 @@ class EventEmitter:
         return count
     
     def _resolve_visitor_id(self, track_id: int, det: dict) -> tuple[str, bool]:
-        """Returns (visitor_id, is_reentry)."""
-        # Already assigned in this clip
         if track_id in self._track_to_visitor:
-            return self._track_to_visitor[track_id], True
-        # Check closed sessions for Re-ID
+            return self._track_to_visitor[track_id], True   # ← is_reentry=True
         frame_idx = det["frame_idx"]
         cutoff = frame_idx - int(REENTRY_WINDOW * self.fps)
         for sess in reversed(self.closed_sessions):
             if sess.last_seen_frame >= cutoff:
-                # Assume same visitor — emit REENTRY rather than ENTRY
                 self._track_to_visitor[track_id] = sess.visitor_id
-                return sess.visitor_id, True
+                return sess.visitor_id, True   # ← REENTRY, not ENTRY
  
         # New visitor
         visitor_id = f"VIS_{uuid.uuid4().hex[:8]}"

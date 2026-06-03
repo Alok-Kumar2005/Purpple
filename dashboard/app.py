@@ -1,3 +1,4 @@
+import os
 import time
 from datetime import datetime, timezone
 
@@ -6,9 +7,9 @@ import streamlit as st
 import pandas as pd
 
 # ── Configuration ─────────────────────────────────────────────────────────────
-API_BASE = "http://web:8000"          # docker-compose service name
+API_BASE = os.getenv("API_BASE", "http://web:8000")        # docker-compose service name
 REFRESH_SECONDS = 5
-DEFAULT_STORE = "STORE_BLR_002"
+DEFAULT_STORE = "ST1008"
 
 SEVERITY_COLOR = {
     "CRITICAL": "🔴",
